@@ -9,7 +9,7 @@ exports.register = async (req, res) => {
       const assignedRole = (role === 'raja' && email !== 'rajakanumuri2005@gmail.com') ? 'client' : role;
   
       const newUser = new User({ username, email, password, role: assignedRole });
-      await newUser.save();
+      await newUser.save(); 
       res.status(201).json({ message: 'User registered successfully', user: newUser });
     } catch (error) {
       res.status(500).json({ error: error.message });
