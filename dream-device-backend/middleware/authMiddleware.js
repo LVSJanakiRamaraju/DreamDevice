@@ -14,3 +14,10 @@ const authMiddleware = (req, res, next) => {
 };
 
 module.exports = authMiddleware;
+
+exports.adminOnly = (req, res, next) => {
+    if (req.user.role !== 'raja' || req.user.email !== 'rajakanumuri2005@gmail.com') {
+      return res.status(403).json({ message: 'Access denied. Only the owner can access this.' });
+    }
+    next();
+  };
