@@ -9,12 +9,6 @@ const UserSchema = new mongoose.Schema({
     enum: ['client', 'expert', 'admin'], 
     default: 'client' 
   },
-  profile: {
-    name: String,
-    bio: String,
-    expertise: [String], 
-    contactInfo: String,
-  },
   createdAt: { type: Date, default: Date.now },
 });
 

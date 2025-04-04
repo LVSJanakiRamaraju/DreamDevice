@@ -11,8 +11,13 @@ function Register() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    const userData = {
+      username: username,
+      email: email,
+      password: password
+    };
     try {
-      await register(username, email, password);
+      await register(userData);
       navigate("/login");
     } catch (err) {
       setError(err);
@@ -23,7 +28,7 @@ function Register() {
     <div className="flex justify-center items-center h-screen">
       <form onSubmit={handleRegister} className="p-6 bg-gray-200 rounded-lg">
         <h2 className="text-2xl mb-4">Register</h2>
-        {error && <p className="text-red-500">{error}</p>}
+        {error && <p className="text-red-500">{JSON.stringify(error)}</p>}
         <input
           type="text"
           placeholder="Username"

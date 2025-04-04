@@ -14,9 +14,16 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     dispatch(loginStart());
+    const userData = {
+      email: email,
+      password: password
+    };
 
     try {
-      const data = await login(email, password);
+      const data = await login(userData);
+      if (data.error) {
+        throw new Error(data.error);
+      }
       dispatch(loginSuccess(data));
       navigate("/dashboard");
     } catch (err) {
