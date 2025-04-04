@@ -6,6 +6,7 @@ function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userType, setUserType] = useState("buyer");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -14,7 +15,8 @@ function Register() {
     const userData = {
       username: username,
       email: email,
-      password: password
+      password: password,
+      role: userType,
     };
     try {
       await register(userData);
@@ -50,6 +52,11 @@ function Register() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <label htmlFor="role">You are a:</label>
+        <select name="role" value={formData.role} onChange={(e) => setUserType(e.target.value)} required>
+          <option value="client">Client</option>
+          <option value="expert">Expert</option>
+        </select>
         <button className="bg-green-500 text-white p-2 w-full">Register</button>
       </form>
     </div>

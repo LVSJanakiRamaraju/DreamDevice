@@ -24,6 +24,7 @@ function Login() {
       if (data.error) {
         throw new Error(data.error);
       }
+      localStorage.setItem("token", res.token);
       dispatch(loginSuccess(data));
       navigate("/dashboard");
     } catch (err) {
