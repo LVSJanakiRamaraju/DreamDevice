@@ -14,44 +14,58 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     dispatch(loginStart());
-    const userData = {
-      email: email,
-      password: password
-    };
 
     try {
-      const data = await login(userData);
+      const data = await login({ email, password });
       if (data.error) {
         throw new Error(data.error);
       }
-      localStorage.setItem("token", res.token);
+
+      localStorage.setItem("token", data.token); // fix: was using 'res' before
       dispatch(loginSuccess(data));
       navigate("/dashboard");
     } catch (err) {
-      dispatch(loginFailure(err));
+      dispatch(loginFailure(err.message || "Login failed"));
     }
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <form onSubmit={handleLogin} className="p-6 bg-gray-200 rounded-lg">
-        <h2 className="text-2xl mb-4">Login</h2>
-        {error && <p className="text-red-500">{error}</p>}
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900 px-4">
+      <form
+        onSubmit={handleLogin}
+        className="bg-white dark:bg-gray-800 text-black dark:text-white w-full max-w-md p-8 rounded-lg shadow-md"
+      >
+        <h2 className="text-3xl font-bold text-center mb-6">Login</h2>
+
+        {error && (
+          <div className="mb-4 p-2 bg-red-100 text-red-700 dark:bg-red-200 rounded">
+            {error}
+          </div>
+        )}
+
         <input
           type="email"
           placeholder="Email"
-          className="border p-2 w-full mb-2"
+          className="w-full mb-4 px-4 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
+
         <input
           type="password"
           placeholder="Password"
-          className="border p-2 w-full mb-2"
+          className="w-full mb-6 px-4 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
-        <button className="bg-blue-500 text-white p-2 w-full" disabled={loading}>
+
+        <button
+          type="submit"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200"
+          disabled={loading}
+        >
           {loading ? "Logging in..." : "Login"}
         </button>
       </form>
