@@ -9,7 +9,20 @@ const app = express();
 app.use(express.json());
 
 const cors = require("cors");
-app.use(cors({ origin: "https://dreamdevice.onrender.com", credentials: true }));
+
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://dream-device.vercel.app'
+  ];
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
+    credentials: true }));
 
 app.use("/api/auth", authRoutes);
 
