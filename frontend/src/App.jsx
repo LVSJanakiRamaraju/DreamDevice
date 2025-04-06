@@ -4,8 +4,16 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import PrivateRoute from "./components/PrivateRoute";
+import AdminDashboard from "./components/dashboards/AdminDashboard";
+import ClientDashboard from "./components/dashboards/ClientDashboard";
+import ExpertDashboard from "./components/dashboards/ExpertDashboard";
+import { useSelector } from "react-redux";
+
 
 function App() {
+
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <Router>
       <Routes>
@@ -13,12 +21,28 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route
-          path="/dashboard"
+          path="/admin-dashboard"
           element={
-            <PrivateRoute>
-              <Dashboard />
+            <PrivateRoute allowedRole="admin">
+              <AdminDashboard />
             </PrivateRoute>
-          } 
+          }
+        />
+        <Route
+          path="/client-dashboard"
+          element={
+            <PrivateRoute allowedRole="client">
+              <ClientDashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/expert-dashboard"
+          element={
+            <PrivateRoute allowedRole="expert">
+              <ExpertDashboard />
+            </PrivateRoute>
+          }
         />
       </Routes>
     </Router>

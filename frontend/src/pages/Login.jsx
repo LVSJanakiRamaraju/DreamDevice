@@ -22,8 +22,14 @@ function Login() {
       }
 
       localStorage.setItem("token", data.token); // fix: was using 'res' before
-      dispatch(loginSuccess(data));
-      navigate("/dashboard");
+      dispatch(loginSuccess({ ...data, role: data.user.role }));
+      if (data.user.role === "client") {
+        navigate("/client-dashboard");
+      } else if (data.user.role === "expert") {
+        navigate("/expert-dashboard");
+      } else if (data.user.role === "admin") {
+        navigate("/admin-dashboard");
+      }
     } catch (err) {
       dispatch(loginFailure(err.message || "Login failed"));
     }
