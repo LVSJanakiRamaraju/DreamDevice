@@ -17,6 +17,7 @@ function Login() {
 
     try {
       const data = await login({ email, password });
+      console.log("Login response:", data); // Log the response for debugging
       if (data.error) {
         throw new Error(data.error);
       }

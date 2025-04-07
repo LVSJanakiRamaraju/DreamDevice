@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import PrivateRoute from "./components/PrivateRoute";
 import AdminDashboard from "./components/dashboards/AdminDashboard";
-import ClientDashboard from "./components/dashboards/ClientDashboard";
+import ClientDashboard from "./components/dashboards/client/ClientDashboard";
 import ExpertDashboard from "./components/dashboards/ExpertDashboard";
 import { useSelector } from "react-redux";
 
